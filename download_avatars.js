@@ -3,31 +3,30 @@ var secrets = require('./secrets.js');
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
-// function getRepoContributors(repoOwner, repoName, cb) {
-//   // ...
-// }
+getRepoContributors("jquery", "jquery", function(err, arrayOfUsers) {
+  console.log("Errors:", err);
+  arrayOfUsers.forEach((element, index) => {
+    console.log(`Avatar URL at index ${index}`,element.avatar_url);
+  });
 
-// getRepoContributors("jquery", "jquery", function(err, result) {
-//   console.log("Errors:", err);
-//   console.log("Result:", result);
-// });
-
-// function getRepoContributors(repoOwner, repoName, cb) {
-//   var url = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors";
-//   request(url, function(err, res, body) {
-//     cb(err, body);
-//   });
-// }
-
+});
+  
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
-      'ErikNPeterson': 'request'
+      'User-Agent': 'request',
+      'Authorization': secrets.GITHUB_TOKEN
     }
   };
 
   request(options, function(err, res, body) {
-    cb(err, body);
+      cb(err, JSON.parse(body));
   });
 }
+
+  // function to parse the JSON string into an object and pass this object 
+  // (an array of contributor objects) to the cb function.
+
+  // WHERE IS OUR CALLBACK FUNCTION???
+
