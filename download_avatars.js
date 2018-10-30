@@ -1,10 +1,6 @@
 var request = require('request');
 var secrets = require('./secrets.js');
 var fs = require('fs');
-
-// If the user does not specify both arguments, the program should 
-// not attempt a request. It should instead terminate 
-// with an error message letting the user know about the problem.
  
 var terminalInput = process.argv.slice(2) 
 
@@ -38,7 +34,7 @@ function downloadImageByURL(url, filePath) {
     console.log('Response Status Code: ', response.statusCode);
     console.log(response.statusMessage) 
     console.log('Downloading image...');
-    console.log(response.headers['content-type']); // we use bracket notation because there is a "-" in the property/key
+    console.log(response.headers['content-type']); 
   })
   .pipe(fs.createWriteStream(filePath))
   .on('finish', function() {
@@ -47,7 +43,6 @@ function downloadImageByURL(url, filePath) {
  });
 }
 
-// use argv in as my getRepoCont...([argv1], [argv2]...)
 getRepoContributors(terminalInput[0], terminalInput[1], function(err, arrayOfUsers) {
   console.log("Errors:", err);
   arrayOfUsers.forEach((element) => {
@@ -56,9 +51,9 @@ getRepoContributors(terminalInput[0], terminalInput[1], function(err, arrayOfUse
 
 });
 }
-// "jquery", "jquery"
-  // function to parse the JSON string into an object and pass this object 
-  // (an array of contributor objects) to the cb function.
 
-  // WHERE IS OUR CALLBACK FUNCTION???
+// you can run from ``node download_avatars.js "jquery" "jquery"`` from  terminal 
 
+
+//learnings: we use bracket notation because there is a "-" in the property/key
+//learnings : you can use ```throw new Error``` to create a new error.
