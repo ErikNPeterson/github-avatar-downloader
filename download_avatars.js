@@ -2,6 +2,16 @@ var request = require('request');
 var secrets = require('./secrets.js');
 var fs = require('fs');
 
+// If the user does not specify both arguments, the program should 
+// not attempt a request. It should instead terminate 
+// with an error message letting the user know about the problem.
+ 
+var terminalInput = process.argv.slice(2) 
+
+if (terminalInput.length !== 2) {
+  throw new Error ("You have input less or more than 2 arguments")
+} else {
+
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
@@ -38,16 +48,15 @@ function downloadImageByURL(url, filePath) {
 }
 
 // use argv in as my getRepoCont...([argv1], [argv2]...)
-getRepoContributors("jquery", "jquery", function(err, arrayOfUsers) {
+getRepoContributors(terminalInput[0], terminalInput[1], function(err, arrayOfUsers) {
   console.log("Errors:", err);
   arrayOfUsers.forEach((element) => {
     downloadImageByURL(element.avatar_url, `avatars/${element.login}.jpg`);
   });
 
 });
-
-
-
+}
+// "jquery", "jquery"
   // function to parse the JSON string into an object and pass this object 
   // (an array of contributor objects) to the cb function.
 
